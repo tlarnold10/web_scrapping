@@ -1,89 +1,44 @@
 from googlesearch import search
 from bs4 import BeautifulSoup
+import lxml
 import requests
 import pdb
+import urllib.request
 
 def main():
-    # Lowes ===============================================
-    my_results_list = []    
-
-    query = "lowes WDT750SAHZ"  
-
-#     for i in search(query, 
-#                     tld = 'com', 
-#                     lang = 'en',  
-#                     num = 1, 
-#                     start = 0, 
-#                     stop = 1,
-#                     pause = 2.0,
-#                    ):
-#         my_results_list.append(i)   
-# 
-#     print(my_results_list[0])   
-    
 
     # Karls ==================================================
-    my_results_list = []    
-
-    query = "Karls WDT750SAHZ"  
-
-    for i in search(query, 
-                    tld = 'com', 
-                    lang = 'en',  
-                    num = 1, 
-                    start = 0, 
-                    stop = 1,
-                    pause = 2.0,
-                   ):
-        my_results_list.append(i)
-        print(i)
-        
-    get_price(my_results_list[0])   
-
-    # Home Depot ================================================
-    my_results_list = []    
-
-    query = "Home Depot WDT750SAHZ"
-
-#     for i in search(query, 
-#                     tld = 'com', 
-#                     lang = 'en',  
-#                     num = 1, 
-#                     start = 0, 
-#                     stop = 1,
-#                     pause = 2.0,
-#                    ):
-#         my_results_list.append(i)
-#         print(i)    
+    soup = get_html('Karls', 'WDT750SAHZ')   
+    price = soup.find(id = "model_price")
+    try:
+        print(price.text)
+    except:
+        print("No price found")
 
     # Menards =====================================================
-    my_results_list = []    
+    soup = get_html('Menards', 'WDT750SAHZ')  
+    price = soup.find(id = "itemDetailPage")
+    try:
+        print(price.text)
+    except:
+        print("No price found")
 
-    query = "Menards WDT750SAHZ"    
-
-    for i in search(query, 
-                    tld = 'com', 
-                    lang = 'en',  
-                    num = 1, 
-                    start = 0, 
-                    stop = 1,
-                    pause = 2.0,
-                   ):
+def get_html(competitor, model_num):
+    my_results_list = []
+    query = competitor + model_num
+    for i in search(query, tld = 'com', lang = 'en', num = 1, start = 0, stop = 1, pause = 2.0,):
         my_results_list.append(i)
-        print(i)    
-
-    get_price(my_results_list[0])
-
-def get_price(url):
+        print(i)  
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
+    url = my_results_list[0]
     if(url[len(url)-1] == "/"):
         url = url[0:len(url)-1]
     req = requests.get(url, headers=headers)
     soup = BeautifulSoup(req.content, 'html.parser')
-    price = soup.find_all(class_ = "h3")
-    print(price)
-
-    return soup
+    response = urllib.request.urlopen(url)
+    html = response.read()
+    pdb.set_trace()
+    return(soup)
 
 if __name__ == '__main__':
     main()
