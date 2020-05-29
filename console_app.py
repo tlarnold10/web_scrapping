@@ -9,17 +9,17 @@ def main():
 
     query = "lowes WDT750SAHZ"  
 
-    for i in search(query,        # The query you want to run
-                    tld = 'com',  # The top level domain
-                    lang = 'en',  # The language
-                    num = 1,     # Number of results per page
-                    start = 0,    # First result to retrieve
-                    stop = 1,  # Last result to retrieve
-                    pause = 2.0,  # Lapse between HTTP requests
-                   ):
-        my_results_list.append(i)   
-
-    print(my_results_list[0])   
+#     for i in search(query, 
+#                     tld = 'com', 
+#                     lang = 'en',  
+#                     num = 1, 
+#                     start = 0, 
+#                     stop = 1,
+#                     pause = 2.0,
+#                    ):
+#         my_results_list.append(i)   
+# 
+#     print(my_results_list[0])   
     
 
     # Karls ==================================================
@@ -27,13 +27,13 @@ def main():
 
     query = "Karls WDT750SAHZ"  
 
-    for i in search(query,        # The query you want to run
-                    tld = 'com',  # The top level domain
-                    lang = 'en',  # The language
-                    num = 1,     # Number of results per page
-                    start = 0,    # First result to retrieve
-                    stop = 1,  # Last result to retrieve
-                    pause = 2.0,  # Lapse between HTTP requests
+    for i in search(query, 
+                    tld = 'com', 
+                    lang = 'en',  
+                    num = 1, 
+                    start = 0, 
+                    stop = 1,
+                    pause = 2.0,
                    ):
         my_results_list.append(i)
         print(i)
@@ -43,31 +43,31 @@ def main():
     # Home Depot ================================================
     my_results_list = []    
 
-    query = "Home Depot WDT750SAHZ" 
+    query = "Home Depot WDT750SAHZ"
 
-    for i in search(query,        # The query you want to run
-                    tld = 'com',  # The top level domain
-                    lang = 'en',  # The language
-                    num = 1,     # Number of results per page
-                    start = 0,    # First result to retrieve
-                    stop = 1,  # Last result to retrieve
-                    pause = 2.0,  # Lapse between HTTP requests
-                   ):
-        my_results_list.append(i)
-        print(i)    
+#     for i in search(query, 
+#                     tld = 'com', 
+#                     lang = 'en',  
+#                     num = 1, 
+#                     start = 0, 
+#                     stop = 1,
+#                     pause = 2.0,
+#                    ):
+#         my_results_list.append(i)
+#         print(i)    
 
     # Menards =====================================================
     my_results_list = []    
 
     query = "Menards WDT750SAHZ"    
 
-    for i in search(query,        # The query you want to run
-                    tld = 'com',  # The top level domain
-                    lang = 'en',  # The language
-                    num = 1,     # Number of results per page
-                    start = 0,    # First result to retrieve
-                    stop = 1,  # Last result to retrieve
-                    pause = 2.0,  # Lapse between HTTP requests
+    for i in search(query, 
+                    tld = 'com', 
+                    lang = 'en',  
+                    num = 1, 
+                    start = 0, 
+                    stop = 1,
+                    pause = 2.0,
                    ):
         my_results_list.append(i)
         print(i)    
@@ -78,11 +78,10 @@ def get_price(url):
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
     if(url[len(url)-1] == "/"):
         url = url[0:len(url)-1]
-        print(url)
     req = requests.get(url, headers=headers)
-    pdb.set_trace()
     soup = BeautifulSoup(req.content, 'html.parser')
-    print(soup.prettify())
+    price = soup.find_all(class_ = "h3")
+    print(price)
 
     return soup
 
