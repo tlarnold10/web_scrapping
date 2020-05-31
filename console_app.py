@@ -85,22 +85,23 @@ def main():
 def get_html(competitor, model_num):
     my_results_list = []
     query = competitor + model_num
-    for i in search(query, tld = 'com', lang = 'en', num = 5, start = 0, stop = 5, pause = 2.0,):
+    for i in search(query, tld = 'com', lang = 'en', num = 1, start = 0, stop = 1, pause = 2.0,):
         my_results_list.append(i)
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
     print(competitor)
-    print(my_results_list)
-    url = my_results_list[0]
-    if(url[len(url)-1] == "/"):
-        url = url[0:len(url)-1]
-    if competitor in ('Lowes', 'Sears', 'Home Depot', 'Menards'):
-        soup = ''
-    else:
-        req = requests.get(url, headers=headers)
-        soup = BeautifulSoup(req.content, 'html.parser')
-    # response = urllib.request.urlopen(url)
-    # html = response.read()
-    # pdb.set_trace()
+    soup = ''
+    url = ''
+    try:
+        url = my_results_list[0]
+        if(url[len(url)-1] == "/"):
+            url = url[0:len(url)-1]
+        if competitor in ('Lowes', 'Sears', 'Home Depot', 'Menards'):
+            pass
+        else:
+            req = requests.get(url, headers=headers)
+            soup = BeautifulSoup(req.content, 'html.parser')
+    except:
+        print(f'No search results found for {competitor}')
     return(soup, url)
 
 def write_row(company_name, product_num, price, product_url):
